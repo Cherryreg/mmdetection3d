@@ -17,7 +17,7 @@ from mmdet3d.core.post_processing import aligned_3d_nms
 from mmdet.core import build_bbox_coder, multi_apply
 from ..builder import HEADS, build_loss
 from .base_conv_bbox_head import BaseConvBboxHead
-
+from icecream import ic
 EPS = 1e-6
 
 
@@ -883,9 +883,11 @@ class GroupFree3DHead(BaseModule):
         """
         # support multi-stage predictions
         assert self.test_cfg['prediction_stages'] in \
-            ['last', 'all', 'last_three']
-
+            ['last', 'all', 'last_three', 's']
+        # print(self.test_cfg)
         prefixes = list()
+        # self.test_cfg['prediction_stages'] = 's'
+        # print(self.test_cfg)
         if self.test_cfg['prediction_stages'] == 'last':
             prefixes = [f's{self.num_decoder_layers - 1}.']
         elif self.test_cfg['prediction_stages'] == 'all':
@@ -896,6 +898,8 @@ class GroupFree3DHead(BaseModule):
                 f's{i}.' for i in range(self.num_decoder_layers -
                                         3, self.num_decoder_layers)
             ]
+        elif self.test_cfg['prediction_stages'] == 's':
+            prefixes = [f's{10}.']
         else:
             raise NotImplementedError
 

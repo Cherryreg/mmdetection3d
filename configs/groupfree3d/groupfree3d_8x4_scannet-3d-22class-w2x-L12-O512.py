@@ -6,34 +6,54 @@ _base_ = [
 
 # model settings
 model = dict(
+    backbone=dict(
+        type='PointNet2SASSG',
+        in_channels=3,
+        num_points=(2048, 1024, 512, 256),
+        radius=(0.2, 0.4, 0.8, 1.2),
+        num_samples=(64, 32, 16, 16),
+        sa_channels=((128, 128, 256), (256, 256, 512), (256, 256, 512),
+                     (256, 256, 512)),
+        fp_channels=((512, 512), (512, 288)),
+        norm_cfg=dict(type='BN2d'),
+        sa_cfg=dict(
+            type='PointSAModule',
+            pool_mod='max',
+            use_xyz=True,
+            normalize_xyz=True)),
     bbox_head=dict(
-        num_classes=18,
+        num_classes=22,
         num_decoder_layers=12,
+        num_proposal=512,
         size_cls_agnostic=False,
         bbox_coder=dict(
             type='GroupFree3DBBoxCoder',
-            num_sizes=18,
+            num_sizes=22,
             num_dir_bins=1,
             with_rot=False,
             size_cls_agnostic=False,
-            mean_sizes=[[0.76966727, 0.8116021, 0.92573744],
-                        [1.876858, 1.8425595, 1.1931566],
-                        [0.61328, 0.6148609, 0.7182701],
-                        [1.3955007, 1.5121545, 0.83443564],
-                        [0.97949594, 1.0675149, 0.6329687],
-                        [0.531663, 0.5955577, 1.7500148],
-                        [0.9624706, 0.72462326, 1.1481868],
-                        [0.83221924, 1.0490936, 1.6875663],
-                        [0.21132214, 0.4206159, 0.5372846],
-                        [1.4440073, 1.8970833, 0.26985747],
-                        [1.0294262, 1.4040797, 0.87554324],
-                        [1.3766412, 0.65521795, 1.6813129],
-                        [0.6650819, 0.71111923, 1.298853],
-                        [0.41999173, 0.37906948, 1.7513971],
-                        [0.59359556, 0.5912492, 0.73919016],
-                        [0.50867593, 0.50656086, 0.30136237],
-                        [1.1511526, 1.0546296, 0.49706793],
-                        [0.47535285, 0.49249494, 0.5802117]]),
+            mean_sizes=[[1.1853635,  1.08464234, 0.5300481 ],
+                        [1.88765612, 1.85415067, 1.19528733],
+                        [0.85874458, 1.08556705, 0.4470463 ],
+                         [0.75720005, 1.04799915, 1.34582313],
+                         [0.12992612, 0.13222266, 0.23328308],
+                         [0.61181084, 0.62051982, 0.70508617],
+                         [0.13554971, 0.13481881, 0.1222724 ],
+                         [1.14209621, 0.69467313, 1.64300397],
+                         [1.08016621, 1.49774906, 0.86502063],
+                         [0.56031829, 0.60526205, 1.71870926],
+                         [0.67985325, 0.92551969, 0.95939219],
+                         [0.2944424,  0.40241896, 0.0523093 ],
+                         [0.32375328, 0.3337317,  0.49952993],
+                         [0.39801043, 0.40996502, 0.21692318],
+                         [0.31293968, 0.49079205, 0.44510456],
+                         [0.54616412, 0.58355285, 0.66404205],
+                         [0.46672829, 0.45970987, 0.67335616],
+                         [1.44830543, 1.57713572, 0.83410145],
+                         [0.52950791, 0.53263195, 0.47203752],
+                         [1.07988677, 1.28553691, 0.58918576],
+                         [0.57768444, 0.59243448, 0.72572129],
+                         [0.99421792, 1.20236225, 1.95497781]]),
         sampling_objectness_loss=dict(
             type='FocalLoss',
             use_sigmoid=True,
@@ -70,11 +90,10 @@ model = dict(
 
 # dataset settings
 dataset_type = 'ScanNetDataset'
-data_root = '/data1/szh/fcaf3d_18_1207/'
-class_names = ('cabinet', 'bed', 'chair', 'sofa', 'table', 'door', 'window',
-               'bookshelf', 'picture', 'counter', 'desk', 'curtain',
-               'refrigerator', 'showercurtrain', 'toilet', 'sink', 'bathtub',
-               'garbagebin')
+data_root = '/data1/szh/fcaf3d_22_1208_50000/'
+class_names = ('bathtub', 'bed', 'bench', 'bookshelf', 'bottle', 'chair', 'cup', 'curtain', 'desk', 'door', 'dresser',
+                 'keyboard', 'lamp', 'laptop', 'monitor', 'night_stand', 'plant', 'sofa', 'stool', 'table', 'toilet',
+                 'wardrobe')
 train_pipeline = [
     dict(
         type='LoadPointsFromFile',
@@ -90,8 +109,7 @@ train_pipeline = [
     dict(type='GlobalAlignment', rotation_axis=2),
     dict(
         type='PointSegClassMapping',
-        valid_cat_ids=(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 24, 28, 33, 34,
-                       36, 39)),
+        valid_cat_ids=(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23)),
     dict(type='PointSample', num_points=50000),
     dict(
         type='RandomFlip3D',
@@ -147,7 +165,7 @@ data = dict(
     workers_per_gpu=4,
     train=dict(
         type='RepeatDataset',
-        times=5,
+        times=1,
         dataset=dict(
             type=dataset_type,
             data_root=data_root,
@@ -195,5 +213,5 @@ optimizer_config = dict(grad_clip=dict(max_norm=0.1, norm_type=2))
 lr_config = dict(policy='step', warmup=None, step=[56, 68])
 
 # runtime settings
-runner = dict(type='EpochBasedRunner', max_epochs=80)
-checkpoint_config = dict(interval=1, max_keep_ckpts=10)
+runner = dict(type='EpochBasedRunner', max_epochs=400)
+checkpoint_config = dict(interval=40, max_keep_ckpts=10)
