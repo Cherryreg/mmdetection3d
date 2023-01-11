@@ -13,6 +13,7 @@ import torch.nn as nn
 
 from mmdet3d.models.builder import BACKBONES
 
+from icecream import  ic
 
 @BACKBONES.register_module()
 class MinkResNet(nn.Module):
@@ -102,11 +103,15 @@ class MinkResNet(nn.Module):
         Returns:
             list[ME.SparseTensor]: Output sparse tensors.
         """
+        # showVoxel(x)
+        ic(x)
         x = self.conv1(x)
         x = self.norm1(x)
         x = self.relu(x)
         if self.pool:
             x = self.maxpool(x)
+        print('after backbone ')
+        ic(x)
         outs = []
         for i in range(self.num_stages):
             x = getattr(self, f'layer{i + 1}')(x)

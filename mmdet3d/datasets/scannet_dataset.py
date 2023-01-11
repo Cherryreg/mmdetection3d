@@ -52,6 +52,20 @@ class ScanNetDataset(Custom3DDataset):
     CLASSES = ('bathtub', 'bed', 'bench', 'bookshelf', 'bottle', 'chair', 'cup', 'curtain', 'desk', 'door', 'dresser',
                  'keyboard', 'lamp', 'laptop', 'monitor', 'night_stand', 'plant', 'sofa', 'stool', 'table', 'toilet',
                  'wardrobe')
+    # CLASSES = ('cabinet', 'bed', 'chair', 'sofa', 'table', 'door',
+    #            'window', 'bookshelf', 'picture', 'counter', 'desk', 'curtain',
+    #            'refrigerator', 'showercurtrain', 'toilet', 'sink', 'bathtub', 'garbagebin',
+    #            "bag", "bottle", "bowl", "camera", "can",
+    #            "cap", "clock", "keyboard", "display", "earphone",
+    #            "jar", "knife", "lamp", "laptop", "microphone",
+    #            "microwave", "mug", "printer", "remote control", "phone",
+    #            "alarm", "book", "cake", "calculator", "candle",
+    #            "charger", "chessboard", "coffee_machine", "comb", "cutting_board",
+    #            "dishes", "doll", "eraser", "eye_glasses", "file_box",
+    #            "fork", "fruit", "globe", "hat", "mirror",
+    #            "notebook", "pencil", "plant", "plate", "radio",
+    #            "ruler", "saucepan", "spoon", "tea_pot", "toaster",
+    #            "vase", "vegetables")
 
     def __init__(self,
                  data_root,
@@ -288,10 +302,27 @@ class ScanNetSegDataset(Custom3DSegDataset):
     CLASSES = ('wall', 'floor', 'bathtub', 'bed', 'bench', 'bookshelf', 'bottle', 'chair', 'cup', 'curtain', 'desk', 'door', 'dresser',
                  'keyboard', 'lamp', 'laptop', 'monitor', 'night_stand', 'plant', 'sofa', 'stool', 'table', 'toilet',
                  'wardrobe')
-
+    # CLASSES = ('cabinet', 'bed', 'chair', 'sofa', 'table', 'door',
+    #            'window', 'bookshelf', 'picture', 'counter', 'desk', 'curtain',
+    #            'refrigerator', 'showercurtrain', 'toilet', 'sink', 'bathtub', 'garbagebin',
+    #            "bag", "bottle", "bowl", "camera", "can",
+    #            "cap", "clock", "keyboard", "display", "earphone",
+    #            "jar", "knife", "lamp", "laptop", "microphone",
+    #            "microwave", "mug", "printer", "remote control", "phone",
+    #            "alarm", "book", "cake", "calculator", "candle",
+    #            "charger", "chessboard", "coffee_machine", "comb", "cutting_board",
+    #            "dishes", "doll", "eraser", "eye_glasses", "file_box",
+    #            "fork", "fruit", "globe", "hat", "mirror",
+    #            "notebook", "pencil", "plant", "plate", "radio",
+    #            "ruler", "saucepan", "spoon", "tea_pot", "toaster",
+    #            "vase", "vegetables")
     VALID_CLASS_IDS = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23)
-
     ALL_CLASS_IDS = tuple(range(25))
+    # VALID_CLASS_IDS = (3,4,5,6,7,8,9,10,11,12,14,16,24,28,33,34,36,39,
+    #                                 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58,
+    #                                 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75,
+    #                                 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 92, 93)
+    # ALL_CLASS_IDS = tuple(range(94))
 
     PALETTE = [
         [174, 199, 232],
@@ -479,9 +510,29 @@ class ScanNetInstanceSegDataset(Custom3DSegDataset):
                  'wardrobe')
 
     VALID_CLASS_IDS = (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23)
+    # CLASSES = ('cabinet', 'bed', 'chair', 'sofa', 'table', 'door',
+    #            'window', 'bookshelf', 'picture', 'counter', 'desk', 'curtain',
+    #            'refrigerator', 'showercurtrain', 'toilet', 'sink', 'bathtub', 'garbagebin',
+    #            "bag", "bottle", "bowl", "camera", "can",
+    #            "cap", "clock", "keyboard", "display", "earphone",
+    #            "jar", "knife", "lamp", "laptop", "microphone",
+    #            "microwave", "mug", "printer", "remote control", "phone",
+    #            "alarm", "book", "cake", "calculator", "candle",
+    #            "charger", "chessboard", "coffee_machine", "comb", "cutting_board",
+    #            "dishes", "doll", "eraser", "eye_glasses", "file_box",
+    #            "fork", "fruit", "globe", "hat", "mirror",
+    #            "notebook", "pencil", "plant", "plate", "radio",
+    #            "ruler", "saucepan", "spoon", "tea_pot", "toaster",
+    #            "vase", "vegetables")
+    # VALID_CLASS_IDS = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23)
+    # VALID_CLASS_IDS = (3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 24, 28, 33, 34, 36, 39,
+    #                    41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58,
+    #                    59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75,
+    #                    76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 92, 93)
+
 
     ALL_CLASS_IDS = tuple(range(25))
-
+    # ALL_CLASS_IDS = tuple(range(94))
     def get_ann_info(self, index):
         """Get annotation info according to the given index.
 

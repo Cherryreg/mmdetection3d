@@ -16,7 +16,7 @@ from mmdet3d.core.bbox.structures import rotation_3d_in_axis
 from mmdet3d.models import HEADS, build_loss
 from mmdet.core import reduce_mean
 
-
+from icecream import ic
 @HEADS.register_module()
 class FCAF3DHead(BaseModule):
     r"""Bbox head of `FCAF3D <https://arxiv.org/abs/2112.00322>`_.

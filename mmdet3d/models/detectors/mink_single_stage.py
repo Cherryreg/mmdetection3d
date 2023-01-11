@@ -9,7 +9,7 @@ except ImportError:
 from mmdet3d.core import bbox3d2result
 from mmdet3d.models import DETECTORS, build_backbone, build_head
 from .base import Base3DDetector
-
+from icecream import ic
 
 @DETECTORS.register_module()
 class MinkSingleStage3DDetector(Base3DDetector):

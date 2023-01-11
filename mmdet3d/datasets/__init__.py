@@ -22,7 +22,7 @@ from .pipelines import (AffineResize, BackgroundPointsFilter, GlobalAlignment,
                         VoxelBasedPointSampler)
 # yapf: enable
 from .s3dis_dataset import S3DISDataset, S3DISSegDataset
-from .scannet_dataset import (ScanNetDataset, ScanNetInstanceSegDataset,
+from .scannet_dataset import (ScanNetDataset,ScanNetInstanceSegDataset,
                               ScanNetSegDataset)
 from .semantickitti_dataset import SemanticKITTIDataset
 from .sunrgbd_dataset import SUNRGBDDataset

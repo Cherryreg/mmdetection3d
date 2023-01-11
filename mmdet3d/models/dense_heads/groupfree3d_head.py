@@ -887,6 +887,7 @@ class GroupFree3DHead(BaseModule):
         # print(self.test_cfg)
         prefixes = list()
         # self.test_cfg['prediction_stages'] = 's'
+        # self.test_cfg['prediction_stages'] = 'all'
         # print(self.test_cfg)
         if self.test_cfg['prediction_stages'] == 'last':
             prefixes = [f's{self.num_decoder_layers - 1}.']
@@ -899,7 +900,7 @@ class GroupFree3DHead(BaseModule):
                                         3, self.num_decoder_layers)
             ]
         elif self.test_cfg['prediction_stages'] == 's':
-            prefixes = [f's{10}.']
+            prefixes = [f's{11}.']
         else:
             raise NotImplementedError
 

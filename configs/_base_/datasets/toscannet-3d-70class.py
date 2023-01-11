@@ -1,9 +1,20 @@
 # dataset settings
 dataset_type = 'ScanNetDataset'
-data_root = '/data1/szh/mmdet_22/'
-class_names = ('bathtub', 'bed', 'bench', 'bookshelf', 'bottle', 'chair', 'cup', 'curtain', 'desk', 'door', 'dresser',
-                 'keyboard', 'lamp', 'laptop', 'monitor', 'night_stand', 'plant', 'sofa', 'stool', 'table', 'toilet',
-                 'wardrobe')
+data_root = '/data1/szh/mmdet_toscannet/'
+class_names = ('cabinet', 'bed', 'chair', 'sofa', 'table', 'door',
+                            'window', 'bookshelf','picture', 'counter', 'desk', 'curtain',
+                            'refrigerator', 'showercurtrain', 'toilet', 'sink', 'bathtub', 'garbagebin',
+                            "bag", "bottle", "bowl", "camera", "can",
+                            "cap", "clock", "keyboard", "display", "earphone",
+                            "jar", "knife", "lamp", "laptop", "microphone",
+                            "microwave", "mug", "printer", "remote control", "phone",
+                            "alarm", "book", "cake", "calculator", "candle",
+                            "charger", "chessboard", "coffee_machine", "comb", "cutting_board",
+                            "dishes", "doll", "eraser", "eye_glasses", "file_box",
+                            "fork",  "fruit", "globe", "hat", "mirror",
+                            "notebook", "pencil", "plant", "plate", "radio",
+                            "ruler", "saucepan", "spoon", "tea_pot", "toaster",
+                            "vase", "vegetables")
 
 file_client_args = dict(backend='disk')
 # Uncomment the following if use ceph or other file clients.
@@ -36,8 +47,11 @@ train_pipeline = [
     dict(type='GlobalAlignment', rotation_axis=2),
     dict(
         type='PointSegClassMapping',
-        valid_cat_ids=(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23),
-        max_cat_id=40),
+        valid_cat_ids=(3,4,5,6,7,8,9,10,11,12,14,16,24,28,33,34,36,39,
+                                    41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58,
+                                    59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75,
+                                    76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 92, 93),
+        max_cat_id=94),
     dict(type='PointSample', num_points=40000),
     dict(
         type='RandomFlip3D',
@@ -117,7 +131,7 @@ data = dict(
         dataset=dict(
             type=dataset_type,
             data_root=data_root,
-            ann_file=data_root + 'scannet_infos_train.pkl',
+            ann_file=data_root + 'toscannet_infos_train.pkl',
             pipeline=train_pipeline,
             filter_empty_gt=False,
             classes=class_names,
@@ -128,7 +142,7 @@ data = dict(
     val=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file=data_root + 'scannet_infos_val.pkl',
+        ann_file=data_root + 'toscannet_infos_val.pkl',
         pipeline=test_pipeline,
         classes=class_names,
         test_mode=True,
@@ -137,7 +151,7 @@ data = dict(
     test=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file=data_root + 'scannet_infos_val.pkl',
+        ann_file=data_root + 'toscannet_infos_val.pkl',
         pipeline=test_pipeline,
         classes=class_names,
         test_mode=True,

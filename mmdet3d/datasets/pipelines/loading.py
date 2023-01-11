@@ -5,7 +5,7 @@ import numpy as np
 from mmdet3d.core.points import BasePoints, get_points_type
 from mmdet.datasets.pipelines import LoadAnnotations, LoadImageFromFile
 from ..builder import PIPELINES
-
+from icecream import ic
 
 @PIPELINES.register_module()
 class LoadMultiViewImageFromFiles(object):
@@ -259,7 +259,7 @@ class PointSegClassMapping(object):
             segmentation mask. Defaults to 40.
     """
 
-    def __init__(self, valid_cat_ids, max_cat_id=40):
+    def __init__(self, valid_cat_ids, max_cat_id=95):
         assert max_cat_id >= np.max(valid_cat_ids), \
             'max_cat_id should be greater than maximum id in valid_cat_ids'
 

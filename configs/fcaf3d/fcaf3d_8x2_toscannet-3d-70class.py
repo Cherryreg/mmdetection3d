@@ -1,11 +1,22 @@
-_base_ = ['../_base_/models/fcaf3d.py', '../_base_/default_runtime.py']
+_base_ = ['../_base_/models/fcaf3d_toscannet.py', '../_base_/default_runtime.py']
 n_points = 100000
 
 dataset_type = 'ScanNetDataset'
-data_root = '/data/szh/dataset/mmdet_22/'
-class_names = ('bathtub', 'bed', 'bench', 'bookshelf', 'bottle', 'chair', 'cup', 'curtain', 'desk', 'door', 'dresser',
-                 'keyboard', 'lamp', 'laptop', 'monitor', 'night_stand', 'plant', 'sofa', 'stool', 'table', 'toilet',
-                 'wardrobe')
+data_root = '/data1/szh/mmdet_toscannet/'
+class_names = ('cabinet', 'bed', 'chair', 'sofa', 'table', 'door',
+                            'window', 'bookshelf','picture', 'counter', 'desk', 'curtain',
+                            'refrigerator', 'showercurtrain', 'toilet', 'sink', 'bathtub', 'garbagebin',
+                            "bag", "bottle", "bowl", "camera", "can",
+                            "cap", "clock", "keyboard", "display", "earphone",
+                            "jar", "knife", "lamp", "laptop", "microphone",
+                            "microwave", "mug", "printer", "remote control", "phone",
+                            "alarm", "book", "cake", "calculator", "candle",
+                            "charger", "chessboard", "coffee_machine", "comb", "cutting_board",
+                            "dishes", "doll", "eraser", "eye_glasses", "file_box",
+                            "fork",  "fruit", "globe", "hat", "mirror",
+                            "notebook", "pencil", "plant", "plate", "radio",
+                            "ruler", "saucepan", "spoon", "tea_pot", "toaster",
+                            "vase", "vegetables")
 train_pipeline = [
     dict(
         type='LoadPointsFromFile',
@@ -15,7 +26,7 @@ train_pipeline = [
         load_dim=6,
         use_dim=[0, 1, 2, 3, 4, 5]),
     dict(type='LoadAnnotations3D'),
-    dict(type='GlobalAlignment', rotation_axis=2),
+    # dict(type='GlobalAlignment', rotation_axis=2),
     dict(type='PointSample', num_points=n_points),
     dict(
         type='RandomFlip3D',
@@ -40,7 +51,7 @@ test_pipeline = [
         use_color=False,
         load_dim=6,
         use_dim=[0, 1, 2, 3, 4, 5]),
-    dict(type='GlobalAlignment', rotation_axis=2),
+    # dict(type='GlobalAlignment', rotation_axis=2),
     dict(
         type='MultiScaleFlipAug3D',
         img_scale=(1333, 800),
@@ -75,7 +86,7 @@ data = dict(
         dataset=dict(
             type=dataset_type,
             data_root=data_root,
-            ann_file=data_root + 'scannet_infos_train.pkl',
+            ann_file=data_root + 'toscannet_infos_train.pkl',
             pipeline=train_pipeline,
             filter_empty_gt=True,
             classes=class_names,
@@ -83,7 +94,7 @@ data = dict(
     val=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file=data_root + 'scannet_infos_val.pkl',
+        ann_file=data_root + 'toscannet_infos_val.pkl',
         pipeline=test_pipeline,
         classes=class_names,
         test_mode=True,
@@ -91,7 +102,7 @@ data = dict(
     test=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file=data_root + 'scannet_infos_val.pkl',
+        ann_file=data_root + 'toscannet_infos_val.pkl',
         pipeline=test_pipeline,
         classes=class_names,
         test_mode=True,
